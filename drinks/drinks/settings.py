@@ -21,8 +21,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'd4tmnh!k7z20a60!q)f)+11y-iq=a4r-qq6t5g%cutp67k906-'
-INDICO_KEY = os.environ.get('INDICO_KEY', True)
-INDICO_MODEL = os.environ.get('INDICO_MODEL', True)
+INDICO_KEY = os.environ.get('INDICO_KEY')
+INDICO_MODEL = os.environ.get('INDICO_MODEL')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

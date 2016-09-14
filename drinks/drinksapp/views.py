@@ -20,9 +20,12 @@ class HomeView(TemplateView):
     template_name = 'home.html'
 
     def get(self, request, *args, **kwargs):
-        context = {
-            'some_dynamic_value': "Some value",
-        }
+        context = {};
+        context['some_dynamic_value'] = 'Some value'
+    	if "url" in request.GET:
+    		url = request.GET["url"]
+    		result = collection.predict(url)
+    		context['result'] = result
         return self.render_to_response(context)
 
 def index(request):
