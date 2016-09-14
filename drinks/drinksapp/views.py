@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from django.http import HttpResponseServerError
 import indicoio
-import settings
+from django.conf import settings
 from indicoio.custom import Collection
 
 indicoio.config.api_key = settings.INDICO_KEY
