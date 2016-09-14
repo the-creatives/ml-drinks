@@ -1,4 +1,3 @@
-secrets.py
 venv
 db.sqlite3
 drinks/static
