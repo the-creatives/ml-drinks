@@ -8,16 +8,17 @@
 {% block content %}
 <!-- Main jumbotron for a primary marketing message or call to action -->
 <div class="jumbotron">
-    <div class="container">
+    <div class="container-fluid">
         <h1 class="text-center"> ML Drinks</h1>
         <h2 class="text-center"> Do You Drink?</h2>
         <p class="text-center">Find out...</p>
-        <p>{{ result }}
-        <form action="/" method="get">
-          Image URL:<br>
-          <input type="text" name="url"><br>
+        <form class="center">
+          <p class="center"> Image URL: </p>
+          <input class="form-control input-lg" id="inputlg" type="text">
+          </br>
+          <input type="submit" value="Submit">
         </form>
+<!--         <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p> -->
     </div>
 </div>
-
 {% endblock %}
