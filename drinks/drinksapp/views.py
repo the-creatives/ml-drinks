@@ -11,10 +11,10 @@ indicoio.config.api_key = settings.INDICO_KEY
 collection = Collection(settings.INDICO_MODEL)
 
 def classify(request):
-	if not "url" in request.GET:
-		return HttpResponseServerError('<h1>Server Error (500)</h1>')
-	url = request.GET["url"]
-	return JsonResponse(collection.predict(url))
+    if not "url" in request.GET:
+        return HttpResponseServerError('<h1>Server Error (500)</h1>')
+    url = request.GET["url"]
+    return JsonResponse(collection.predict(url))
 
 class HomeView(TemplateView):
     template_name = 'home.html'
@@ -22,10 +22,11 @@ class HomeView(TemplateView):
     def get(self, request, *args, **kwargs):
         context = {};
         context['some_dynamic_value'] = 'Some value'
-    	if "url" in request.GET:
-    		url = request.GET["url"]
-    		result = collection.predict(url)
-    		context['result'] = result
+        if "url" in request.GET:
+            url = request.GET["url"]
+            result = collection.predict(url)
+            context['result'] = result
+            context['url'] = url
         return self.render_to_response(context)
 
 def index(request):

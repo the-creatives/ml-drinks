@@ -11,12 +11,13 @@
     <div class="container">
         <h1 class="text-center"> ML Drinks</h1>
         <h2 class="text-center"> Do You Drink?</h2>
-        <p class="text-center">Find out...</p>
-        <p>{{ result }}
+        <p class="text-center">ML-Drinks is a neural network which will recognize alcoholic beverages in your pictures. Enter an image URL below!</p>
         <form action="/" method="get">
           Image URL:<br>
           <input type="text" name="url"><br>
         </form>
+        <p>{{ result }}</p>
+        <p><img src="{{ url }}" /></p>
     </div>
 </div>
 
