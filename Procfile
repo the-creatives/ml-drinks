@@ -1,1 +1,1 @@
-web: gunicorn drinks.wsgi --log-file -
+web: gunicorn drinks/drinks.wsgi --log-file -
