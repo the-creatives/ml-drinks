@@ -2,11 +2,11 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from django.http import HttpResponseServerError
 import indicoio
-import secrets
+import settings
 from indicoio.custom import Collection
 
-indicoio.config.api_key = secrets.INDICO_KEY
-collection = Collection(secrets.INDICO_MODEL)
+indicoio.config.api_key = settings.INDICO_KEY
+collection = Collection(settings.INDICO_MODEL)
 
 def classify(request):
 	if not "url" in request.GET:
