@@ -7,7 +7,7 @@
 
 {% block content %}
 <!-- Main jumbotron for a primary marketing message or call to action -->
-<div class="jumbotron">
+
     <div class="container">
         <h1 class="text-center"> ML Drinks</h1>
         <h2 class="text-center"> Do You Drink?</h2>
@@ -17,8 +17,7 @@
           <input class="form-control input-lg" name="url" id="inputlg" type="text"><br>
         </form>
         <p>{{ result }}</p>
-        <p><img src="{{ url }}" /></p>
+        <p><img src="{{ url }}" width="600px" /></p>
     </div>
-</div>
 
 {% endblock %}
