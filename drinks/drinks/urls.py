@@ -20,5 +20,5 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.HomeView.as_view(), name='index'),
-    url(r'^classify/$', views.classify, name='classify')
+    url(r'^classify/$', views.ClassifyView.as_view(), name='classify')
 ]
