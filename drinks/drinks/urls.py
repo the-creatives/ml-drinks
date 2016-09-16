@@ -22,5 +22,6 @@ from django.conf import settings
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.HomeView.as_view(), name='index'),
-    url(r'^classify/$', views.ClassifyView.as_view(), name='classify')
-]
+    url(r'^classify/$', views.ClassifyView.as_view(), name='classify'),
+    #url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT})
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

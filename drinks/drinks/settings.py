@@ -23,7 +23,8 @@ SECRET_KEY = 'd4tmnh!k7z20a60!q)f)+11y-iq=a4r-qq6t5g%cutp67k906-'
 INDICO_KEY = os.environ.get('INDICO_KEY')
 INDICO_MODEL = os.environ.get('INDICO_MODEL')
 
-ALLOWED_HOSTS = ['localhost']
+DEBUG = False
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'ml-drinks.herokuapp.com', 'connect.facebook.net']
 
 # Application definition
 
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -117,7 +119,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR,'static')
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR,'staticfiles/'),
+    os.path.join(BASE_DIR,'staticfiles'),
 )
 print BASE_DIR
 print STATIC_ROOT
