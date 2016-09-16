@@ -8,54 +8,8 @@
 {% block content %}
 <!-- Main jumbotron for a primary marketing message or call to action -->
 
-<script type="text/javascript">
-    fbResults = {};
-    function getCookie(name)
-    {
-        var cookieValue = null;
-        if (document.cookie && document.cookie != '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = cookies[i].replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-                // Does this cookie string begin with the name we want?
-
-                if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-
-    function batchPost(list) {
-        console.log("You did it");
-        var http = new XMLHttpRequest();
-        var url = "/classify/";
-
-        var queryString = "";
-        for(var i = 0; i < list.length; i++) {
-            queryString += "data=" + list[i];
-            //Append an & except after the last element
-            if(i < list.length - 1) {
-               queryString += "&";
-            }
-        }
-
-        http.open("POST", url, true);
-        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        if (!(/^http:.*/.test(url) || /^https:.*/.test(url))) {
-         http.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-        }
-
-        http.onload = function (e) {
-            console.log("Result!" + this.response);
-            fbResults = JSON.parse(this.response);
-        };
-
-        http.send(queryString);
-    }
-</script>
+{% load static %}
+<script src="{% static 'js/app.js' %}" type="text/javascript"></script>
 
     <div class="container">
         <h1 class="text-center"> ML Drinks</h1>

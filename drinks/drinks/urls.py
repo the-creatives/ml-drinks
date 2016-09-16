@@ -16,9 +16,11 @@ Including another URLconf
 from django.conf.urls import url
 from drinksapp import views
 from django.contrib import admin
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.HomeView.as_view(), name='index'),
     url(r'^classify/$', views.ClassifyView.as_view(), name='classify')
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
