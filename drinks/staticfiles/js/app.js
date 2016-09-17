@@ -20,10 +20,53 @@ function getCookie(name) {
 }
 
 /*
+Takes a single image URL and POSTs it to "/"
+Necessary because this function must be triggered 
+within Javascript (inside of the callback of Login)
+*/
+
+function indicoPredict(imageUrl) {
+    var url = "/?url=" + imageUrl;
+    window.open(url, "_self");
+}
+
+/*
 Takes a list of image URLs and returns alcohol vs not alcohol results for each.
 We pay one indico credit per image submitted.
 */
 function batchPost(list) {
+    var url = "/";
+    params = {"data": list};
+    submitFormFromJs(url, params, "post");
+}
+
+function submitFormFromJs(path, params, method) {
+    method = method || "post"; // Set method to post by default if not specified.
+
+    var form = document.createElement("form");
+    form.setAttribute("method", method);
+    form.setAttribute("action", path);
+
+    for(var key in params) {
+        if(params.hasOwnProperty(key)) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", params[key]);
+
+            form.appendChild(hiddenField);
+         }
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+}
+
+/*
+Takes a list of image URLs and returns alcohol vs not alcohol results for each.
+We pay one indico credit per image submitted.
+*/
+function batchPostJson(list) {
     console.log("You did it");
     var http = new XMLHttpRequest();
     var url = "/classify/";
