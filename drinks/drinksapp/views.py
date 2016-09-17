@@ -73,6 +73,3 @@ class PrivacyView(TemplateView):
     def get(self, request, *args, **kwargs):
         context = {}
         return self.render_to_response(context)
-
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
