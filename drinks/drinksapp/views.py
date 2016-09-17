@@ -67,6 +67,4 @@ class HomeView(TemplateView):
         for i in range(len(data)):
             context['data'].append(result[i])
         return self.render_to_response(context)
-
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+        
