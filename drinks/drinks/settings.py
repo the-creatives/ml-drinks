@@ -23,7 +23,7 @@ SECRET_KEY = 'd4tmnh!k7z20a60!q)f)+11y-iq=a4r-qq6t5g%cutp67k906-'
 INDICO_KEY = os.environ.get('INDICO_KEY')
 INDICO_MODEL = os.environ.get('INDICO_MODEL')
 
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = [
 'localhost',
 '127.0.0.1',

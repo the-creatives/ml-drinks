@@ -2,13 +2,18 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from django.http import HttpResponseServerError
 from django.template import RequestContext
-import indicoio
-import json
 from django.conf import settings
-from indicoio.custom import Collection
-
 from django.views.generic import TemplateView
 from django.views.generic import View
+from django.utils import http
+
+import indicoio
+import json
+import urllib
+
+from indicoio.custom import Collection
+
+
 
 indicoio.config.api_key = settings.INDICO_KEY
 collection = Collection(settings.INDICO_MODEL)
@@ -51,7 +56,7 @@ class HomeView(TemplateView):
         if "url" in request.GET:
             url = request.GET["url"]
             print url
-            result = collection.predict(url)
+            result = collection.predict(http.urlunquote(url))
             print "result"
             print result
             context['result'] = result
@@ -63,7 +68,7 @@ class HomeView(TemplateView):
         print dir(request.POST)
         data = request.POST.getlist('data')
         print data
-        result = collection.predict(data)
+        result = collection.predict(http.urlunquote(data))
         print type(result)
         context = {}
         context['list'] = []
