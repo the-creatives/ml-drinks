@@ -63,9 +63,9 @@ class HomeView(TemplateView):
         result = collection.predict(data)
         print type(result)
         context = {}
-        context['data'] = []
+        context['list'] = []
         for i in range(len(data)):
-            context['data'].append(result[i])
+            context['list'].append(result[i])
         return self.render_to_response(context)
 
 class PrivacyView(TemplateView):
