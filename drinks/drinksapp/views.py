@@ -68,5 +68,11 @@ class HomeView(TemplateView):
             context['data'].append(result[i])
         return self.render_to_response(context)
 
+class PrivacyView(TemplateView):
+    template_name = 'privacy.html'
+    def get(self, request, *args, **kwargs):
+        context = {}
+        return self.render_to_response(context)
+
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
