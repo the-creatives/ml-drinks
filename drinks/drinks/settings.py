@@ -24,7 +24,13 @@ INDICO_KEY = os.environ.get('INDICO_KEY')
 INDICO_MODEL = os.environ.get('INDICO_MODEL')
 
 DEBUG = False
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'ml-drinks.herokuapp.com', 'connect.facebook.net']
+ALLOWED_HOSTS = [
+'localhost',
+'127.0.0.1',
+'ml-drinks.herokuapp.com',
+'connect.facebook.net',
+'www.facebook.com'
+]
 
 # Application definition
 
