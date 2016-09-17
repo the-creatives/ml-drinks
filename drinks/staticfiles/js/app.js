@@ -1,8 +1,9 @@
-fbResults = {}; // results from facebook
+/*FB.Event.subscribe("auth.login", getProfilePicLink())*/
 
 /*
 Allows this app to make JS requests to Django.
 */
+
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie != '') {
@@ -92,4 +93,17 @@ function batchPostJson(list) {
     };
 
     http.send(queryString);
+}
+
+function callLoginFunction(){
+    var user_id = FB.getUserID();
+    console.log(user_id);
+    FB.api(
+        "/" + user_id + "/picture?height=1000&width=1000",
+        function (response) {
+          if (response && !response.error) {
+            indicoPredict(response.data.url);
+          }
+        }
+    );
 }

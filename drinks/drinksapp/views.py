@@ -50,7 +50,10 @@ class HomeView(TemplateView):
         context['some_dynamic_value'] = 'Some value'
         if "url" in request.GET:
             url = request.GET["url"]
+            print url
             result = collection.predict(url)
+            print "result"
+            print result
             context['result'] = result
             context['url'] = url
         return self.render_to_response(context)
