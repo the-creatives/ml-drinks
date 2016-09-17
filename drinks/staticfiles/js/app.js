@@ -41,7 +41,7 @@ function batchPredict(list) {
     submitFormFromJs(url, params, "post");
 }
 
-function submitFormFromJs(path, params, method) {
+function submitFormFromJs(path, params, method, token) {
     method = method || "post"; // Set method to post by default if not specified.
 
     var form = document.createElement("form");
@@ -58,6 +58,12 @@ function submitFormFromJs(path, params, method) {
             form.appendChild(hiddenField);
          }
     }
+
+    var hiddenToken = document.createElement("input");
+    hiddenToken.setAttribute("type", "hidden");
+    hiddenToken.setAttribute("name", "csrfmiddlewaretoken");
+    hiddenToken.setAttribute("value", getCookie('csrftoken'));
+    form.appendChild(hiddenToken);
 
     document.body.appendChild(form);
     form.submit();
