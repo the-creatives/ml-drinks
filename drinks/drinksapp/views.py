@@ -35,7 +35,7 @@ class ClassifyView(View):
         if not "url" in request.GET:
             return HttpResponseServerError('<h1>Server Error (500)</h1>')
         url = request.GET["url"]
-        return JsonResponse(collection.predict(url))
+        return JsonResponse(collection.predict(http.urlunquote(url)))
 
     def post(self, request, *args, **kwargs):
         print request.POST.viewkeys()
@@ -68,7 +68,7 @@ class HomeView(TemplateView):
         print dir(request.POST)
         data = request.POST.getlist('data')
         print data
-        result = collection.predict(http.urlunquote(data))
+        result = collection.predict(data)
         print type(result)
         context = {}
         context['list'] = []

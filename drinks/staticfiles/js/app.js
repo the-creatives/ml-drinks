@@ -104,17 +104,27 @@ function batchPostJson(list) {
 }
 
 function callLoginFunction() {
-    var user_id = FB.getUserID();
-    console.log(user_id);
-    indicoPredict("https://graph.facebook.com/v2.7/" + user_id + "/picture?width=1000&height=1000");
-    /*
-    FB.api(
-        "/" + user_id + "/picture?height=1000&width=1000",
-        function(response) {
-            if (response && !response.error) {
-                //indicoPredict(response.data.url);
-            }
+    FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+            console.log("We're connected");
+            console.log(response);
+            predictFBImage(response);
+        } else {
+            console.log("not logged in");
+            initiateFBLogin();
         }
-    );
-    */
+    });
+}
+
+function initiateFBLogin() {
+    FB.login(function(response) {
+        predictFBImage(response);
+    });
+}
+
+function predictFBImage(response) {
+    console.log("RUnning predict on response:");
+    console.log(response);
+    var user_id = response.authResponse.userID;
+    indicoPredict("https://graph.facebook.com/v2.7/" + user_id + "/picture?width=1000&height=1000");
 }
