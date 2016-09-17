@@ -31,10 +31,10 @@ function indicoPredict(imageUrl) {
 }
 
 /*
-Takes a list of image URLs and returns alcohol vs not alcohol results for each.
+Takes a list of image URLs and submits it as a form.
 We pay one indico credit per image submitted.
 */
-function batchPost(list) {
+function batchPredict(list) {
     var url = "/";
     params = {"data": list};
     submitFormFromJs(url, params, "post");
