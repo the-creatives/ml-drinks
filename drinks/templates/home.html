@@ -31,7 +31,7 @@ div.fb-login-button {
     <div class="container-fluid">
         <h1 class="text-center"> ML Drinks</h1>
         <h2 class="text-center"> Do You Drink?</h2>
-        <p class="text-center">ML-Drinks is a neural network which will recognize alcoholic beverages in your pictures. Enter an image URL below!</p>
+        <p class="text-center">ML-Drinks is a neural network which will recognize and flag alcoholic beverages in your pictures. Either enter an image URL or log into Facebook. </p>
         <form action="/" method="get">
             {% csrf_token %}
             <p class="text-center">Image URL:</p>
@@ -40,6 +40,7 @@ div.fb-login-button {
         <p>{{ result }}</p>
         <p>{{ list }}</p>
         <p><img src="{{ url }}" width="600px" /></p>
+        <p class="text-center">
         <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false" onlogin="callLoginFunction()"></div>
     </div>
 
