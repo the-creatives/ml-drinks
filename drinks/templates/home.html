@@ -10,6 +10,7 @@
 
 {% load static %}
 <head>
+
 <style>
 
 body {
@@ -45,33 +46,32 @@ div.fb-login-button {
     font-size: 14px;
 }
 
-.btn {
-    height: 30px;
-    margin: auto;
-}
-
 </style>
-</head>
-<script src="{% static 'js/app.js' %}" type="text/javascript"></script>
+
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
-    <div class="container-fluid">
-        <h1 class="text-center"> ML Drinks</h1>
-        <h2 class="text-center"> Do You Drink?</h2>
-        <p class="text-center">ML-Drinks is a neural network which will recognize and flag alcoholic beverages in your pictures. Either enter an image URL or log into Facebook. </p>
-        <form action="/" method="get">
-            {% csrf_token %}
-        <div class="link-container">
-            <span>
-                <input class="form-control input-lg link-box" name="url" id="inputlg" placeholder="your image url here" type="text">
-                <button type="button" class="btn btn-primary">Submit</button>
-            </span>
-        </div>
-        <p>{{ result }}</p>
-        <p>{{ list }}</p>
-        <p><img class="image_container" src="{{ url }}" width="600px" /></p>
-        <p class="text-center">
-        <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false" onlogin="callLoginFunction()"></div>
+<link href="{% static 'css/style.css' %}" rel='stylesheet' type='text/css'>
+
+</head>
+<script src="{% static 'js/app.js' %}" type="text/javascript"></script>
+
+<div class="container-fluid">
+    <h1 class="text-center"> ML Drinks</h1>
+    <h2 class="text-center"> Do You Drink?</h2>
+    <p class="text-center">ML-Drinks is a neural network which will recognize and flag alcoholic beverages in your pictures. Either enter an image URL or log into Facebook. </p>
+    <form action="/" method="get">
+        {% csrf_token %}
+    <div class="link-container">
+        <span>
+            <input class="form-control input-lg link-box" name="url" id="inputlg" placeholder="your image url here" type="text">
+            <button type="button" class="btn btn-primary">Submit</button>
+        </span>
     </div>
+    <p>{{ result }}</p>
+    <p>{{ list }}</p>
+    <p><img class="image_container" src="{{ url }}" width="600px" /></p>
+    <p class="text-center">
+    <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false" onlogin="callLoginFunction()"></div>
+</div>
 
 {% endblock %}
