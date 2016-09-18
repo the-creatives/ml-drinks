@@ -2,13 +2,18 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from django.http import HttpResponseServerError
 from django.template import RequestContext
-import indicoio
-import json
 from django.conf import settings
-from indicoio.custom import Collection
-
 from django.views.generic import TemplateView
 from django.views.generic import View
+from django.utils import http
+
+import indicoio
+import json
+import urllib
+
+from indicoio.custom import Collection
+
+
 
 indicoio.config.api_key = settings.INDICO_KEY
 collection = Collection(settings.INDICO_MODEL)
@@ -30,7 +35,7 @@ class ClassifyView(View):
         if not "url" in request.GET:
             return HttpResponseServerError('<h1>Server Error (500)</h1>')
         url = request.GET["url"]
-        return JsonResponse(collection.predict(url))
+        return JsonResponse(collection.predict(http.urlunquote(url)))
 
     def post(self, request, *args, **kwargs):
         print request.POST.viewkeys()
@@ -50,7 +55,10 @@ class HomeView(TemplateView):
         context['some_dynamic_value'] = 'Some value'
         if "url" in request.GET:
             url = request.GET["url"]
-            result = collection.predict(url)
+            print url
+            result = collection.predict(http.urlunquote(url))
+            print "result"
+            print result
             context['result'] = result
             context['url'] = url
         return self.render_to_response(context)
@@ -63,9 +71,9 @@ class HomeView(TemplateView):
         result = collection.predict(data)
         print type(result)
         context = {}
-        context['data'] = []
+        context['list'] = []
         for i in range(len(data)):
-            context['data'].append(result[i])
+            context['list'].append(result[i])
         return self.render_to_response(context)
 
 class PrivacyView(TemplateView):
