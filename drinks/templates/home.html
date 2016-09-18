@@ -10,50 +10,13 @@
 
 {% load static %}
 <head>
-<style>
 
-body {
-  font-family: 'Open Sans', sans-serif;
-  background-color: #bbbbbb;
-}
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
-div.fb-login-button {
-  height: 10em;
-  display: flex;
-  align-items: center;
-  justify-content: center
-} 
+<link href="{% static 'css/style.css' %}" rel='stylesheet' type='text/css'>
 
-.image_container {
-   display:block;
-   margin:auto;
-}
-
-.link-box {
-    width: 500px;
-    height: 30px;
-    display: inline-block;
-    margin: auto;
-}
-
-.link-container {
-    width: 580px;
-    margin: auto;
-}
-
-.input-lg {
-    font-size: 14px;
-}
-
-.btn {
-    height: 30px;
-    margin: auto;
-}
-
-</style>
 </head>
 <script src="{% static 'js/app.js' %}" type="text/javascript"></script>
-<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
     <div class="container-fluid">
         <h1 class="text-center"> ML Drinks</h1>
