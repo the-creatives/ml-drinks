@@ -61,12 +61,13 @@ div.fb-login-button {
     <p class="text-center">ML-Drinks is a neural network which will recognize and flag alcoholic beverages in your pictures. Either enter an image URL or log into Facebook. </p>
     <form action="/" method="get">
         {% csrf_token %}
-    <div class="link-container">
-        <span>
-            <input class="form-control input-lg link-box" name="url" id="inputlg" placeholder="your image url here" type="text">
-            <button type="button" class="btn btn-primary">Submit</button>
-        </span>
-    </div>
+      <div class="link-container">
+          <span>
+              <input class="form-control input-lg link-box" name="url" id="inputlg" placeholder="your image url here" type="text">
+              <button type="submit" class="btn btn-primary">Submit</button>
+          </span>
+      </div>
+    </form>
     <p>{{ result }}</p>
     <p>{{ list }}</p>
     <p><img class="image_container" src="{{ url }}" width="600px" /></p>
