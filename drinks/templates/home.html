@@ -22,7 +22,7 @@
     <h1 class="text-center">Drink Detector</h1>
     <h2 class="text-center">Drink Detector recognizes alcohol (bottles, cans, solo cups, etc.) in your photos.</h2>
     
-    <div>
+    <div class="text-center paddeddiv" style="margin-top: 20px;">
     <form action="/" method="get">
         {% csrf_token %}
         <div class="link-container">
@@ -34,9 +34,13 @@
     </form>
     </div>
 
-    <div class="text-center">or</div>
+    <div class="text-center paddeddiv">or</div>
 
-    <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="false" onlogin="callLoginFunction()" style="padding:5px; margin:5px;">Submit your profile picture</div>
+    <div class="text-center paddeddiv">
+        <span style="line-height:2em;">
+            <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="false" onlogin="callLoginFunction()">Log In</div> to submit your profile picture
+        </span>
+    </div>
     <div id="result" class="text-center"></div>
     <div class="image_container text-center"><img src="{{ url }}" width="600px" /></div>
 </div>

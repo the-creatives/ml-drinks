@@ -1,3 +1,8 @@
+h1 {
+  margin-top: 5px;
+  padding-top: 5px;
+}
+
 
 body {
   font-family: 'Open Sans', sans-serif;
@@ -5,10 +10,10 @@ body {
 }
 
 div.fb-login-button {
-  height: 10em;
   display: flex;
   align-items: center;
-  justify-content: center
+  justify-content: center;
+  display: inline;
 } 
 
 .image_container {
@@ -35,4 +40,9 @@ div.fb-login-button {
 .btn {
     height: 30px;
     margin: auto;
+}
+
+.paddeddiv {
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
