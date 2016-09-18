@@ -16,12 +16,39 @@ body {
   font-family: 'Open Sans', sans-serif;
   background-color: #bbbbbb;
 }
+
 div.fb-login-button {
   height: 10em;
   display: flex;
   align-items: center;
   justify-content: center
 } 
+
+.image_container {
+   display:block;
+   margin:auto;
+}
+
+.link-box {
+    width: 500px;
+    height: 30px;
+    display: inline-block;
+    margin: auto;
+}
+
+.link-container {
+    width: 580px;
+    margin: auto;
+}
+
+.input-lg {
+    font-size: 14px;
+}
+
+.btn {
+    height: 30px;
+    margin: auto;
+}
 
 </style>
 </head>
@@ -34,12 +61,15 @@ div.fb-login-button {
         <p class="text-center">ML-Drinks is a neural network which will recognize and flag alcoholic beverages in your pictures. Either enter an image URL or log into Facebook. </p>
         <form action="/" method="get">
             {% csrf_token %}
-            <p class="text-center">Image URL:</p>
-            <input class="form-control input-lg" name="url" id="inputlg" type="text"><br>
-        </form>
+        <div class="link-container">
+            <span>
+                <input class="form-control input-lg link-box" name="url" id="inputlg" placeholder="your image url here" type="text">
+                <button type="button" class="btn btn-primary">Submit</button>
+            </span>
+        </div>
         <p>{{ result }}</p>
         <p>{{ list }}</p>
-        <p><img src="{{ url }}" width="600px" /></p>
+        <p><img class="image_container" src="{{ url }}" width="600px" /></p>
         <p class="text-center">
         <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false" onlogin="callLoginFunction()"></div>
     </div>
