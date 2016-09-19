@@ -16,7 +16,6 @@ div.fb-login-button {
 
 .image_container {
    display:block;
-   margin:auto;
 }
 
 .link-box {
@@ -35,8 +34,8 @@ div.fb-login-button {
 }
 
 .btn {
-    height: 30px;
-    margin: auto;
+    width: 100%;
+    line-height: 1em;
 }
 
 .paddeddiv {
