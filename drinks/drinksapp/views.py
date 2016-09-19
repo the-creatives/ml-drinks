@@ -13,8 +13,6 @@ import urllib
 
 from indicoio.custom import Collection
 
-
-
 indicoio.config.api_key = settings.INDICO_KEY
 collection = Collection(settings.INDICO_MODEL)
 

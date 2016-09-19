@@ -1,20 +1,35 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+  background-color: #ffffff;
+}
+
 h1 {
   margin-top: 5px;
   padding-top: 5px;
 }
 
+div.fb-login-button {
+  display: inline;
+  align-items: center;
+  justify-content: center
+} 
 
-body {
-  font-family: 'Open Sans', sans-serif;
-  background-color: #bbbbbb;
+.image_container {
+   display:block;
+   margin:auto;
 }
 
-div.fb-login-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  display: inline;
-} 
+.link-box {
+    width: 500px;
+    height: 30px;
+    display: inline-block;
+    margin: auto;
+}
+
+.link-container {
+    width: 580px;
+    margin: auto;
+}
 
 .input-lg {
     font-size: 14px;
@@ -28,25 +43,4 @@ div.fb-login-button {
 .paddeddiv {
   margin-top: 10px;
   margin-bottom: 5px;
-}
-
-.container {
-  margin: auto;
-}
-
-.container2 {
-  margin: auto;
-}
-
-.col {
-  padding-right: 0;
-  padding-left: 0;
-}
-
-.link-box{
-  height: 30px;
-}
-
-#menu-primary li a {
-  color: #FFFFFF;
 }
