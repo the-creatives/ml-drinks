@@ -46,3 +46,7 @@ div.fb-login-button {
 .link-box{
   height: 30px;
 }
+
+#menu-primary li a {
+  color: #FFFFFF;
+}
