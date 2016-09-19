@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Home Page{% endblock %}
+
+{% block description %}This page is an awesome home page.{% endblock %}
+
+
+{% block content %}
+<!-- Main jumbotron for a primary marketing message or call to action -->
+
+{% load static %}
+<script src="{% static 'js/app.js' %}" type="text/javascript"></script>
+
+<style type="text/css">
+    .jumbotron {
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+    body {
+	  font-family: 'Open Sans', sans-serif;
+	  background-color: #bbbbbb;
+}
+</style>
+
+<div class="container">
+    <h1 class="text-center"> About the-creatives</h1>
+    <p>Curious about who we are? More info coming soon!</p>
+</div>
+
+{% endblock %}

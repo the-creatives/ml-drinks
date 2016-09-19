@@ -81,3 +81,9 @@ class PrivacyView(TemplateView):
     def get(self, request, *args, **kwargs):
         context = {}
         return self.render_to_response(context)
+
+class AboutView(TemplateView):
+    template_name = 'about.html'
+    def get(self, request, *args, **kwargs):
+        context = {}
+        return self.render_to_response(context)
