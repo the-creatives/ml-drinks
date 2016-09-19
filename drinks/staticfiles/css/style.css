@@ -16,23 +16,6 @@ div.fb-login-button {
   display: inline;
 } 
 
-.image_container {
-   display:block;
-   margin:auto;
-}
-
-.link-box {
-    width: 500px;
-    height: 30px;
-    display: inline-block;
-    margin: auto;
-}
-
-.link-container {
-    width: 600px;
-    margin: auto;
-}
-
 .input-lg {
     font-size: 14px;
 }
@@ -45,4 +28,21 @@ div.fb-login-button {
 .paddeddiv {
   margin-top: 10px;
   margin-bottom: 5px;
+}
+
+.container {
+  margin: auto;
+}
+
+.container2 {
+  margin: auto;
+}
+
+.col {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.link-box{
+  height: 30px;
 }
