@@ -6,6 +6,7 @@ from django.conf import settings
 from django.views.generic import TemplateView
 from django.views.generic import View
 from django.utils import http
+from django.utils.safestring import mark_safe
 
 import indicoio
 import json
@@ -62,16 +63,14 @@ class HomeView(TemplateView):
         return self.render_to_response(context)
 
     def post(self, request, *args, **kwargs):
-        print request.POST.viewitems()
-        print dir(request.POST)
-        data = request.POST.getlist('data')
+        data = json.loads(request.POST.get('data'))
+        print "Printing data:"
         print data
         result = collection.predict(data)
         print type(result)
+        print result
         context = {}
-        context['list'] = []
-        for i in range(len(data)):
-            context['list'].append(result[i])
+        context['list'] = mark_safe(json.dumps(zip(data, result)))
         return self.render_to_response(context)
 
 class PrivacyView(TemplateView):

@@ -1,7 +1,6 @@
 body {
   font-family: 'Open Sans', sans-serif;
   background-color: #ffffff;
-  text-align: center;
 }
 
 h1 {
@@ -42,8 +41,4 @@ div.fb-login-button {
 .paddeddiv {
   margin-top: 10px;
   margin-bottom: 5px;
-}
-
-.titlepadding {
-  margin-top: 25px;
 }
