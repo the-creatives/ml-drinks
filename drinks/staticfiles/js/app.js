@@ -1,5 +1,3 @@
-/*FB.Event.subscribe("auth.login", getProfilePicLink())*/
-
 /*
 Allows this app to make JS requests to Django.
 */
@@ -40,6 +38,7 @@ function batchPredict(list) {
     params = {
         "data": list
     };
+    console.log(params);
     submitFormFromJs(url, params, "post");
 }
 
@@ -55,7 +54,7 @@ function submitFormFromJs(path, params, method, token) {
             var hiddenField = document.createElement("input");
             hiddenField.setAttribute("type", "hidden");
             hiddenField.setAttribute("name", key);
-            hiddenField.setAttribute("value", params[key]);
+            hiddenField.setAttribute("value", JSON.stringify(params[key]));
 
             form.appendChild(hiddenField);
         }
@@ -118,13 +117,51 @@ function callLoginFunction() {
 
 function initiateFBLogin() {
     FB.login(function(response) {
-        predictFBImage(response);
+        predictFBImages(response);
     });
 }
 
 function predictFBImage(response) {
-    console.log("RUnning predict on response:");
+    document.getElementById("fb_photo_menu").innerHTML = "";
+    console.log("Running predict on response:");
     console.log(response);
-    var user_id = response.authResponse.userID;
+    user_id = response.authResponse.userID;
     indicoPredict("https://graph.facebook.com/v2.7/" + user_id + "/picture?width=1000&height=1000");
+}
+
+function predictFBImages(response) {
+    console.log("Call predictFBImages");
+    var user_id = response.authResponse.userID;
+    console.log("Processing batch for " + user_id);
+    var oldUrl = "https://graph.facebook.com/v2.7/" + user_id + "/photos";
+    getFBImages("/me?fields=id,name,photos.fields(id,images)", []);
+}
+
+function getFBImages(url, list) {
+    FB.api(url, function(response) {
+        console.log(response);
+        for (var obj in response.photos.data) {
+            console.log("Extract from object " + obj);
+            list.push(response.photos.data[obj].images[0].source);
+        }
+        console.log(list);
+        getNextFBImages(response.photos.paging.next, list);
+        //batchPredict(list);
+    });
+}
+
+function getNextFBImages(url, list) {
+    FB.api(url, function(response) {
+        console.log(response);
+        for (var obj in response.data) {
+            console.log("Extract from object " + obj);
+            list.push(response.data[obj].images[0].source);
+        }
+        console.log(list);
+        if (response.paging.hasOwnProperty("next")) {
+            getNextFBImages(response.paging.next, list);
+        } else {
+            batchPredict(list.slice(0,40));
+        }
+    });
 }

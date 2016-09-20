@@ -31,6 +31,7 @@
           {% endblock %}
       </div>
       <div id="result" class="text-center col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2"></div>
+      <div id="batch_result" class="text-center col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2"></div>
   </div>
   
   <div class="row" style="margin-top: 20px;">
@@ -66,14 +67,54 @@
 </div>
 
 <script type="text/javascript">
+function getResult(alcohol) {
+  if (alcohol > .5) {
+    return "<p><h3>Alcohol, " + (alcohol*100).toFixed(2) + "% sure</h3>";
+  } else {
+    return "<p><h3>No alcohol, " + ((1-alcohol)*100).toFixed(2) + "% sure</h3>";
+  }
+}
+
 {% block results %}
 {% if result %}
 var alcohol = {{ result.alcohol }};
-if (alcohol > .5) {
-    document.getElementById("result").innerHTML = "<p><h3>Alcohol, " + (alcohol*100).toFixed(2) + "% sure</h3>";
-} else {
-    document.getElementById("result").innerHTML = "<p><h3>No alcohol, " + ((1-alcohol)*100).toFixed(2) + "% sure</h3>";
+document.getElementById("result").innerHTML = getResult(alcohol);
+{% endif %}
+{% endblock %}
+
+{% block batchResults %}
+{% if list %}
+var fbResults = {{ list }};
+var alcoholCount = 0;
+var cells = [];
+
+for (var i = 0; i < fbResults.length; i++) {
+  var alcohol = fbResults[i][1]["alcohol"];
+  if (alcohol > .5) {
+    var imageTag = "<img src='" + fbResults[i][0] + "' width='200' />";
+    var resultTag = getResult(alcohol);
+    cells.push(imageTag + "<br />" + resultTag + "<br />");
+    alcoholCount += 1;
+  }
 }
+
+var tableString = "<table id='fb_photo_grid'>";
+for (var i = 0; i < cells.length; i++) {
+  if (i % 3 === 0) {
+    tableString += "<tr>";
+  }
+  tableString += "<td>";
+  tableString += cells[i];
+  tableString += "</td>";
+  if (i % 3 === 0 && i > 0) {
+    tableString += "</tr>";
+  }
+}
+tableString += "</table>";
+
+document.getElementById("result").innerHTML += tableString;
+
+document.getElementById("result").innerHTML += alcoholCount + " out of " + fbResults.length + " Facebook photos contained alcohol.";
 {% endif %}
 {% endblock %}
 </script>
