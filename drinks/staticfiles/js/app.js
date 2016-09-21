@@ -117,8 +117,8 @@ function callLoginFunction() {
 
 function initiateFBLogin() {
     FB.login(function(response) {
-        predictFBImages(response);
-    });
+        predictFBImages();
+    }, {scope: "user_photos"});
 }
 
 function predictFBImage(response) {
@@ -144,6 +144,10 @@ function predictFBImages() {
 function getFBImages(url, list) {
     FB.api(url, function(response) {
         console.log(response);
+        if (!response.hasOwnProperty("photos")) {
+            document.getElementById("result").innerHTML = "<p>Could not get photos</p>";
+            return;
+        }
         for (var obj in response.photos.data) {
             console.log("Extract from object " + obj);
             list.push(response.photos.data[obj].images[0].source);
@@ -152,6 +156,7 @@ function getFBImages(url, list) {
         if (response.photos.paging.hasOwnProperty("next")) {
             getNextFBImages(response.photos.paging.next, list);
         } else {
+            document.getElementById("result").innerHTML = "<p>Got photos, checking for alcohol... (may take a minute)</p>";
             batchPredict(list.slice(0,60));
         }
     }, {scope: 'user_photos'});
