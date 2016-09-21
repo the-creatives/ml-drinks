@@ -161,7 +161,7 @@ function getNextFBImages(url, list) {
         if (response.paging.hasOwnProperty("next")) {
             getNextFBImages(response.paging.next, list);
         } else {
-            batchPredict(list.slice(0,40));
+            batchPredict(list);
         }
     });
 }
