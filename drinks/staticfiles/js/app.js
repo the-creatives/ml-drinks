@@ -107,7 +107,7 @@ function callLoginFunction() {
         if (response.status === 'connected') {
             console.log("We're connected");
             console.log(response);
-            predictFBImage(response);
+            predictFBImages(response);
         } else {
             console.log("not logged in");
             initiateFBLogin();
@@ -122,16 +122,20 @@ function initiateFBLogin() {
 }
 
 function predictFBImage(response) {
-    document.getElementById("fb_photo_menu").innerHTML = "";
     console.log("Running predict on response:");
     console.log(response);
     user_id = response.authResponse.userID;
     indicoPredict("https://graph.facebook.com/v2.7/" + user_id + "/picture?width=1000&height=1000");
 }
 
-function predictFBImages(response) {
+function predictFBImages() {
     console.log("Call predictFBImages");
-    var user_id = response.authResponse.userID;
+    //var user_id = response.authResponse.userID;
+    var user_id = FB.getUserID();
+    if (typeof user_id == 'undefined' || user_id == null || user_id == "") {
+        document.getElementById("result").innerHTML = "<p>Please log in.</p>"
+        return;
+    }
     console.log("Processing batch for " + user_id);
     var oldUrl = "https://graph.facebook.com/v2.7/" + user_id + "/photos";
     getFBImages("/me?fields=id,name,photos.fields(id,images)", []);
@@ -145,9 +149,12 @@ function getFBImages(url, list) {
             list.push(response.photos.data[obj].images[0].source);
         }
         console.log(list);
-        getNextFBImages(response.photos.paging.next, list);
-        //batchPredict(list);
-    });
+        if (response.photos.paging.hasOwnProperty("next")) {
+            getNextFBImages(response.photos.paging.next, list);
+        } else {
+            batchPredict(list.slice(0,60));
+        }
+    }, {scope: 'user_photos'});
 }
 
 function getNextFBImages(url, list) {
@@ -163,5 +170,5 @@ function getNextFBImages(url, list) {
         } else {
             batchPredict(list.slice(0,60));
         }
-    });
+    }, {scope: 'user_photos'});
 }
