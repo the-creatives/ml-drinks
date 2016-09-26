@@ -1,7 +1,59 @@
 /*
-Allows this app to make JS requests to Django.
+If already connected, call predictFBImage
+If not, try to log in
 */
 
+function callLoginFunction() {
+    FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+            console.log("We're connected");
+            console.log(response);
+            predictFBImages(response);
+        } else {
+            console.log("not logged in");
+            initiateFBLogin();
+        }
+    });
+}
+
+/*
+Prompt the user to log in, requesting the user_photos scope
+*/
+function initiateFBLogin() {
+    FB.login(function(response) {
+        predictFBImages();
+    }, {scope: "user_photos"});
+}
+
+/*
+Logic to handle a textbox URL entry
+*/
+function predictFBImage(response) {
+    console.log("Running predict on response:");
+    console.log(response);
+    user_id = response.authResponse.userID;
+    indicoPredict("https://graph.facebook.com/v2.7/" + user_id + "/picture?width=1000&height=1000");
+}
+
+/*
+Logic to handle requesting FB images and running predictions
+*/
+function predictFBImages() {
+    console.log("Call predictFBImages");
+    //var user_id = response.authResponse.userID;
+    var user_id = FB.getUserID();
+    if (typeof user_id == 'undefined' || user_id == null || user_id == "") {
+        document.getElementById("result").innerHTML = "<p>Please log in.</p>"
+        return;
+    }
+    console.log("Processing batch for " + user_id);
+    var oldUrl = "https://graph.facebook.com/v2.7/" + user_id + "/photos";
+    getFBImages("/me?fields=id,name,photos.fields(id,images)", []);
+}
+
+/*
+Allows this app to make JS requests to Django.
+*/
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie != '') {
@@ -36,42 +88,6 @@ We pay one indico credit per image submitted.
 function batchPredict(list) {
     document.getElementById("result").innerHTML = "<p>Got " + list.length + " photos, checking for alcohol... (may take a minute)</p>";
     batchPostJson(list);
-/*
-    var url = "/classify/";
-    params = {
-        "data": list
-    };
-    console.log(params);
-    submitFormFromJs(url, params, "post");
-*/
-}
-
-function submitFormFromJs(path, params, method, token) {
-    method = method || "post"; // Set method to post by default if not specified.
-
-    var form = document.createElement("form");
-    form.setAttribute("method", method);
-    form.setAttribute("action", path);
-
-    for (var key in params) {
-        if (params.hasOwnProperty(key)) {
-            var hiddenField = document.createElement("input");
-            hiddenField.setAttribute("type", "hidden");
-            hiddenField.setAttribute("name", key);
-            hiddenField.setAttribute("value", JSON.stringify(params[key]));
-
-            form.appendChild(hiddenField);
-        }
-    }
-
-    var hiddenToken = document.createElement("input");
-    hiddenToken.setAttribute("type", "hidden");
-    hiddenToken.setAttribute("name", "csrfmiddlewaretoken");
-    hiddenToken.setAttribute("value", getCookie('csrftoken'));
-    form.appendChild(hiddenToken);
-
-    document.body.appendChild(form);
-    form.submit();
 }
 
 /*
@@ -107,45 +123,6 @@ function batchPostJson(list) {
     console.log(queryString);
 
     http.send(queryString);
-}
-
-function callLoginFunction() {
-    FB.getLoginStatus(function(response) {
-        if (response.status === 'connected') {
-            console.log("We're connected");
-            console.log(response);
-            predictFBImages(response);
-        } else {
-            console.log("not logged in");
-            initiateFBLogin();
-        }
-    });
-}
-
-function initiateFBLogin() {
-    FB.login(function(response) {
-        predictFBImages();
-    }, {scope: "user_photos"});
-}
-
-function predictFBImage(response) {
-    console.log("Running predict on response:");
-    console.log(response);
-    user_id = response.authResponse.userID;
-    indicoPredict("https://graph.facebook.com/v2.7/" + user_id + "/picture?width=1000&height=1000");
-}
-
-function predictFBImages() {
-    console.log("Call predictFBImages");
-    //var user_id = response.authResponse.userID;
-    var user_id = FB.getUserID();
-    if (typeof user_id == 'undefined' || user_id == null || user_id == "") {
-        document.getElementById("result").innerHTML = "<p>Please log in.</p>"
-        return;
-    }
-    console.log("Processing batch for " + user_id);
-    var oldUrl = "https://graph.facebook.com/v2.7/" + user_id + "/photos";
-    getFBImages("/me?fields=id,name,photos.fields(id,images)", []);
 }
 
 function getFBImages(url, list) {
