@@ -34,6 +34,7 @@ Takes a list of image URLs and submits it as a form.
 We pay one indico credit per image submitted.
 */
 function batchPredict(list) {
+    document.getElementById("result").innerHTML = "<p>Got photos, checking for alcohol... (may take a minute)</p>";
     var url = "/";
     params = {
         "data": list
@@ -154,6 +155,7 @@ function getFBImages(url, list) {
         }
         console.log(list);
         if (response.photos.paging.hasOwnProperty("next")) {
+            document.getElementById("result").innerHTML = "<p>Fetched " + list.length + " Facebook photos... (may take a minute)</p>";
             getNextFBImages(response.photos.paging.next, list);
         } else {
             document.getElementById("result").innerHTML = "<p>Got photos, checking for alcohol... (may take a minute)</p>";
