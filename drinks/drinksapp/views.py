@@ -37,20 +37,20 @@ class ClassifyView(View):
         return JsonResponse(collection.predict(http.urlunquote(url)))
 
     def post(self, request, *args, **kwargs):
-        print request.POST.viewkeys()
         data = request.POST.getlist('data')
+        print "Printing data:"
+        print data
+        print "Printing parsed data:"
         result = collection.predict(data)
-        print type(result)
-        response = {}
-        for i in range(len(data)):
-            response[data[i]] = result[i]
-        return JsonResponse(response)
+        context = {}
+        context['list'] = zip(data, result)
+        return JsonResponse(context)
 
 class HomeView(TemplateView):
     template_name = 'home.html'
 
     def get(self, request, *args, **kwargs):
-        context = {};
+        context = {}
         context['some_dynamic_value'] = 'Some value'
         if "url" in request.GET:
             url = request.GET["url"]
@@ -64,11 +64,7 @@ class HomeView(TemplateView):
 
     def post(self, request, *args, **kwargs):
         data = json.loads(request.POST.get('data'))
-        print "Printing data:"
-        print data
         result = collection.predict(data)
-        print type(result)
-        print result
         context = {}
         context['list'] = mark_safe(json.dumps(zip(data, result)))
         return self.render_to_response(context)

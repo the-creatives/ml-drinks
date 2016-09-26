@@ -34,13 +34,16 @@ Takes a list of image URLs and submits it as a form.
 We pay one indico credit per image submitted.
 */
 function batchPredict(list) {
-    document.getElementById("result").innerHTML = "<p>Got photos, checking for alcohol... (may take a minute)</p>";
-    var url = "/";
+    document.getElementById("result").innerHTML = "<p>Got " + list.length + " photos, checking for alcohol... (may take a minute)</p>";
+    batchPostJson(list);
+/*
+    var url = "/classify/";
     params = {
         "data": list
     };
     console.log(params);
     submitFormFromJs(url, params, "post");
+*/
 }
 
 function submitFormFromJs(path, params, method, token) {
@@ -82,7 +85,7 @@ function batchPostJson(list) {
 
     var queryString = "";
     for (var i = 0; i < list.length; i++) {
-        queryString += "data=" + list[i];
+        queryString += "data=" + encodeURIComponent(list[i]);
         //Append an & except after the last element
         if (i < list.length - 1) {
             queryString += "&";
@@ -96,9 +99,12 @@ function batchPostJson(list) {
     }
 
     http.onload = function(e) {
-        console.log("Result!" + this.response);
+        console.log("Result! " + this.response);
         fbResults = JSON.parse(this.response);
+        renderBatchResults(fbResults.list);
     };
+
+    console.log(queryString);
 
     http.send(queryString);
 }
@@ -155,16 +161,15 @@ function getFBImages(url, list) {
         }
         console.log(list);
         if (response.photos.paging.hasOwnProperty("next")) {
-            document.getElementById("result").innerHTML = "<p>Fetched " + list.length + " Facebook photos... (may take a minute)</p>";
             getNextFBImages(response.photos.paging.next, list);
         } else {
-            document.getElementById("result").innerHTML = "<p>Got photos, checking for alcohol... (may take a minute)</p>";
             batchPredict(list.slice(0,60));
         }
     }, {scope: 'user_photos'});
 }
 
 function getNextFBImages(url, list) {
+    document.getElementById("result").innerHTML = "<p>Fetched " + list.length + " Facebook photos... (may take a minute)</p>";
     FB.api(url, function(response) {
         console.log(response);
         for (var obj in response.data) {
