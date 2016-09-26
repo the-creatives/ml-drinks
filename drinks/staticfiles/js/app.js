@@ -2,7 +2,6 @@
 If already connected, call predictFBImage
 If not, try to log in
 */
-
 function callLoginFunction() {
     FB.getLoginStatus(function(response) {
         if (response.status === 'connected') {
@@ -40,6 +39,7 @@ Logic to handle requesting FB images and running predictions
 */
 function predictFBImages() {
     console.log("Call predictFBImages");
+    fbResults = [];
     //var user_id = response.authResponse.userID;
     var user_id = FB.getUserID();
     if (typeof user_id == 'undefined' || user_id == null || user_id == "") {
@@ -75,26 +75,52 @@ Takes a single image URL and POSTs it to "/"
 Necessary because this function must be triggered 
 within Javascript (inside of the callback of Login)
 */
-
 function indicoPredict(imageUrl) {
     var url = "/?url=" + imageUrl;
     window.open(encodeURI(url), "_self");
 }
 
 /*
-Takes a list of image URLs and submits it as a form.
+Takes a list of image URLs and returns alcohol vs not alcohol results for each.
 We pay one indico credit per image submitted.
 */
-function batchPredict(list) {
-    document.getElementById("result").innerHTML = "<p>Got " + list.length + " photos, checking for alcohol... (may take a minute)</p>";
-    batchPostJson(list);
+function predictForBatch(list) {
+    return new Promise(function (resolve, reject) {
+        console.log("Building promise");
+        var http = new XMLHttpRequest();
+        var url = "/classify/";
+
+        var queryString = "";
+        for (var i = 0; i < list.length; i++) {
+            queryString += "data=" + encodeURIComponent(list[i]);
+            //Append an & except after the last element
+            if (i < list.length - 1) {
+                queryString += "&";
+            }
+        }
+
+        http.open("POST", url, true);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        if (!(/^http:.*/.test(url) || /^https:.*/.test(url))) {
+            http.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+        }
+
+        http.onload = function(e) {
+            handlePredictionResult(this.response);
+        };
+
+        console.log(queryString);
+
+        http.send(queryString);
+    });
+
 }
 
 /*
 Takes a list of image URLs and returns alcohol vs not alcohol results for each.
 We pay one indico credit per image submitted.
 */
-function batchPostJson(list) {
+function batchPredict(list) {
     console.log("You did it");
     var http = new XMLHttpRequest();
     var url = "/classify/";
@@ -115,9 +141,7 @@ function batchPostJson(list) {
     }
 
     http.onload = function(e) {
-        console.log("Result! " + this.response);
-        fbResults = JSON.parse(this.response);
-        renderBatchResults(fbResults.list);
+        handlePredictionResult(this.response);
     };
 
     console.log(queryString);
@@ -136,11 +160,10 @@ function getFBImages(url, list) {
             console.log("Extract from object " + obj);
             list.push(response.photos.data[obj].images[0].source);
         }
-        console.log(list);
         if (response.photos.paging.hasOwnProperty("next")) {
             getNextFBImages(response.photos.paging.next, list);
         } else {
-            batchPredict(list.slice(0,60));
+            predictionRoutine(list);
         }
     }, {scope: 'user_photos'});
 }
@@ -157,7 +180,35 @@ function getNextFBImages(url, list) {
         if (response.paging.hasOwnProperty("next")) {
             getNextFBImages(response.paging.next, list);
         } else {
-            batchPredict(list.slice(0,60));
+            predictionRoutine(list);
         }
     }, {scope: 'user_photos'});
+}
+
+function handlePredictionResult(response) {
+    console.log("Result! " + response);
+    var result = JSON.parse(response);
+    fbResults = fbResults.concat(result.list);
+    renderBatchResults(fbResults);
+}
+
+function predictionRoutine(list) {
+    document.getElementById("result").innerHTML = "<p>Got " + list.length + " photos, checking for alcohol... (may take a minute)</p>";
+    var slices = sliceList(list, 50);
+    for (var slice in slices) {
+        console.log(slices[slice]);
+        batchPredict(slices[slice]);
+    }
+}
+
+function sliceList(list, sliceSize) {
+    listOfLists = [];
+    var beg = 0;
+    var end = sliceSize;
+    while (beg < list.length) {
+        listOfLists.push(list.slice(beg, end));
+        beg = beg + sliceSize;
+        end = end + sliceSize;
+    }
+    return listOfLists;
 }

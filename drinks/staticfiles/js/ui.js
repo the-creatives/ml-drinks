@@ -21,6 +21,10 @@ function renderResult(alcohol) {
 }
 
 function renderBatchResults(fbResults) {
+	if (typeof fbResults == 'undefined' || fbResults == null || fbResults == []) {
+		return;
+	}
+
     var alcoholCount = 0;
 	var cells = [];
 
