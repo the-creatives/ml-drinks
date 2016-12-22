@@ -3,8 +3,10 @@ from django.http import JsonResponse
 from django.http import HttpResponseServerError
 from django.template import RequestContext
 from django.conf import settings
+
 from django.views.generic import TemplateView
 from django.views.generic import View
+
 from django.utils import http
 from django.utils.safestring import mark_safe
 
@@ -13,6 +15,7 @@ import json
 import urllib
 
 from indicoio.custom import Collection
+from drinksapp.models import Submission
 
 indicoio.config.api_key = settings.INDICO_KEY
 collection = Collection(settings.INDICO_MODEL)
@@ -51,10 +54,11 @@ class HomeView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         context = {}
-        context['some_dynamic_value'] = 'Some value'
+
         if "url" in request.GET:
             url = request.GET["url"]
             print url
+            Submission.objects.create(url=url)
             result = collection.predict(http.urlunquote(url))
             print "result"
             print result

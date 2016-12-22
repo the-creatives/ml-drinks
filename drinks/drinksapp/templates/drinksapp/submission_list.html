@@ -1,0 +1,9 @@
+{% csrf_token %}
+
+<h1>Submissions</h1>
+
+<ul>
+  {% for submission in object_list %}
+    <li class="submission">{{ submission.created_at }} {{ submission.url }}</li>
+  {% endfor %}
+</ul>
