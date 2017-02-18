@@ -16,4 +16,4 @@ Advice in choosing training images
 -----
 Images on the Internet can vary dramatically. For example, you can have pictures of cars on blank backgrounds, pictures of cars on highways, pictures of cars in cities, pictures of cars at car shows, pictures of cars in home garages, and more. Be sure to provide positive and negative examples of each type of picture. If you put a picture of a car in a city in the "cars" category, be sure to put pictures of cities which don't have cars in the "not cars" category.
 
-<img src="https://fathomless-castle-35327.herokuapp.com/requests/passive">
+<img src="https://fathomless-castle-35327.herokuapp.com/requests/passive/a316f6b1-5307-489d-a9ec-c2ed02f00ed9">
