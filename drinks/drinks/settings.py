@@ -150,3 +150,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+LOGIN_URL = 'admin:index'
+LOGIN_REDIRECT_URL = 'admin:index'
