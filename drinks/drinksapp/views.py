@@ -6,6 +6,7 @@ from django.conf import settings
 
 from django.views.generic import TemplateView
 from django.views.generic import View
+from django.views.generic import ListView
 
 from django.utils import http
 from django.utils.safestring import mark_safe
@@ -15,10 +16,14 @@ import json
 import urllib
 
 from indicoio.custom import Collection
+from indicoio import IndicoError
 from drinksapp.models import Submission
 
 indicoio.config.api_key = settings.INDICO_KEY
 collection = Collection(settings.INDICO_MODEL)
+
+class SubmissionView(ListView):
+    model = Submission
 
 def classify(request):
     if not "url" in request.GET:
@@ -55,16 +60,19 @@ class HomeView(TemplateView):
     def get(self, request, *args, **kwargs):
         context = {}
 
-        if "url" in request.GET:
-            url = request.GET["url"]
-            print url
-            Submission.objects.create(url=url)
-            result = collection.predict(http.urlunquote(url))
-            print "result"
-            print result
-            context['result'] = result
-            context['url'] = url
-        return self.render_to_response(context)
+        try:
+            if "url" in request.GET:
+                url = request.GET["url"]
+                Submission.objects.create(url=url)
+                result = collection.predict(http.urlunquote(url))
+                print "result"
+                print result
+                context['result'] = result
+                context['url'] = url
+            return self.render_to_response(context)
+        except IndicoError as e:
+            context['indico_error'] = True
+            return self.render_to_response(context)
 
     def post(self, request, *args, **kwargs):
         data = json.loads(request.POST.get('data'))
