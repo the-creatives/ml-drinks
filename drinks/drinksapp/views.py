@@ -10,6 +10,8 @@ from django.views.generic import ListView
 
 from django.utils import http
 from django.utils.safestring import mark_safe
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 import indicoio
 import json
@@ -22,6 +24,7 @@ from drinksapp.models import Submission
 indicoio.config.api_key = settings.INDICO_KEY
 collection = Collection(settings.INDICO_MODEL)
 
+@method_decorator(login_required, name='dispatch')
 class SubmissionView(ListView):
     model = Submission
 
