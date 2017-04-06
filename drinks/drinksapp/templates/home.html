@@ -85,5 +85,12 @@ var fbResults = {{ list }};
 renderBatchResults(fbResults);
 {% endif %}
 {% endblock %}
+
+{% block indicoError %}
+{% if indico_error %}
+renderIndicoError();
+{% endif %}
+{% endblock %}
+
 </script>
 {% endblock %}

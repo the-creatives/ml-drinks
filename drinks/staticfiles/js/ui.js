@@ -20,6 +20,10 @@ function renderResult(alcohol) {
 	document.getElementById("result").innerHTML = getResult(alcohol);
 }
 
+function renderIndicoError(error) {
+	document.getElementById("result").innerHTML = "<span style='color:red'>Error:</span> We had a problem trying to process your image. Sorry, please try a different one!";
+}
+
 function renderBatchResults(fbResults) {
 	if (typeof fbResults == 'undefined' || fbResults == null || fbResults == []) {
 		return;
