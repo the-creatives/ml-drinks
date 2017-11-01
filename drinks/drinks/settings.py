@@ -127,6 +127,9 @@ STATIC_ROOT = os.path.join(BASE_DIR,'static')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR,'staticfiles'),
 )
-print BASE_DIR
-print STATIC_ROOT
-print STATICFILES_DIRS
+print(BASE_DIR)
+print(STATIC_ROOT)
+print(STATICFILES_DIRS)
+
+INDICO_MODEL="AlcVsNot"
+INDICO_KEY="19fbfa9fbaf54c82df3977a90f9e89d3"

@@ -66,7 +66,7 @@ function submitFormFromJs(path, params, method, token) {
     hiddenToken.setAttribute("name", "csrfmiddlewaretoken");
     hiddenToken.setAttribute("value", getCookie('csrftoken'));
     form.appendChild(hiddenToken);
-
+    console.log(hiddenToken)
     document.body.appendChild(form);
     form.submit();
 }
