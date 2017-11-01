@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from drinksapp import views
+
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
@@ -24,4 +25,7 @@ urlpatterns = [
     url(r'^$', views.HomeView.as_view(), name='index'),
     url(r'^classify/$', views.ClassifyView.as_view(), name='classify'),
     url(r'^privacy/$', views.PrivacyView.as_view(), name='privacy'),
+    url(r'^about/$', views.AboutView.as_view(), name='about'),
+    url(r'^submissions/$', views.SubmissionView.as_view(), name='submissionview'),
+    #url(r'^submissions/create$', views.SubmissionCreate.as_view(success_url="/submissions"), name='submissionview'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
